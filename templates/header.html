@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learnify</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="header">
+        <section class="flex">
+            <a href="{% url 'home' %}" class="logo">Learnify</a>
+
+            <form action="" method="post" class="search-form">
+                {% csrf_token %}
+                <input type="text" name="search_box" placeholder="search course...." required maxlength="100">
+                <button type="submit" class="fas fa-search" name="search-box"></button>
+            </form>
+
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="login-btn" class="fas fa-user"></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+            </div>
+
+            <div class="profile">
+                {% if request.user.is_authenticated %}
+                    {% if user_profile and user_profile.profile_picture %}
+                        {% if user_profile.profile_picture.name == 'profile_pics/default_profile.jpg' %}
+                            <img src="{% static 'images/aboutpic.jpg' %}" alt="profile image">
+                        {% else %}
+                            <img src="{{ user_profile.profile_picture.url }}" alt="profile image">
+                        {% endif %}
+                    {% else %}
+                        <img src="{% static 'images/aboutpic.jpg' %}" alt="profile image">
+                    {% endif %}
+                    <h3>{{ request.user.first_name }} {{ request.user.last_name }}</h3>
+                    <span>student</span>
+                    <a href="{% url 'profile' %}" class="btn">view profile</a>
+                    <a href="{% url 'logout' %}" class="delete-btn">logout</a>
+                {% else %}
+                    <div class="flex-btn">
+                        <a href="{% url 'login' %}" class="option-btn">login</a>
+                        <a href="{% url 'register' %}" class="option-btn">register</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </header>
+
+    <div class="side-bar">
+        <div id="close-btn" class="fas fa-times close-side-bar"></div>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+                {% if user_profile and user_profile.profile_picture %}
+                    {% if user_profile.profile_picture.name == 'profile_pics/default_profile.jpg' %}
+                        <img src="{% static 'images/aboutpic.jpg' %}" alt="profile image">
+                    {% else %}
+                        <img src="{{ user_profile.profile_picture.url }}" alt="profile image">
+                    {% endif %}
+                {% else %}
+                    <img src="{% static 'images/aboutpic.jpg' %}" alt="profile image">
+                {% endif %}
+                <h3>{{ request.user.first_name }} {{ request.user.last_name }}</h3>
+                <span>student</span>
+                <a href="{% url 'profile' %}" class="btn">view profile</a>
+            {% endif %}
+        </div>
+        <nav class="navbar">
+            <a href="{% url 'home' %}"><i class="fas fa-home"></i><span>home</span></a>
+            <a href="{% url 'courses' %}"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
+            <a href="{% url 'teachers' %}"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
+            <a href="{% url 'contact' %}"><i class="fas fa-headset"></i><span>contact</span></a>
+            <a href="{% url 'about' %}"><i class="fas fa-question"></i><span>about us</span></a>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}"><i class="fas fa-right-from-bracket"></i><span>log out</span></a>
+            {% else %}
+                <a href="{% url 'login' %}"><i class="fas fa-right-to-bracket"></i><span>log in</span></a>
+            {% endif %}
+        </nav>
+    </div>

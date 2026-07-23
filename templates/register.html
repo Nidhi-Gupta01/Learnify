@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="login-page">
+  <header class="header">
+    <section class="flex">
+      <h3 class="logo">Learnify</h3>
+    </section>
+  </header>
+
+  <section class="form-container">
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %} <!-- CSRF TOKEN ADDED -->
+      <h3>new register</h3>
+      <p>your name <span>*</span></p>
+      <input type="text" name="name" class="box" placeholder="enter your name" maxlength="100" required>
+      <p>your email <span>*</span></p>
+      <input type="email" name="email" class="box" placeholder="enter your email" maxlength="100" required>
+      <p>create password <span>*</span></p>
+      <input type="password" name="password" class="box" placeholder="enter your password" maxlength="100" required>
+      <p>confirm password <span>*</span></p>
+      <input type="password" name="confirm_password" class="box" placeholder="confirm your password" maxlength="100"
+        required>
+      <p>upload image <span>*</span></p>
+      <input type="file" name="image" accept="image/*" class="box" required>
+      <input type="submit" name="submit" value="register now" class="btn">
+      <p class="al-login"><a href="{% url 'login' %}">login </a>if already have accoont</p>
+    </form>
+  </section>
+
+  <script src="{% static 'learnify.js' %}"></script>
+  <script src="{% static 'watch.js' %}"></script>
+</body>
+
+</html>

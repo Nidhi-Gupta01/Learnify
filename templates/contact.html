@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+    {% include 'header.html' %}
+
+    <!-- Messages display -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="contact">
+        <div class="row">
+            <div class="image">
+                <img src="{% static 'images/contact.jpg' %}" alt="">
+            </div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <h3>get in touch</h3>
+                <input type="text" class="box" placeholder="enter your name" required maxlength="100" name="name">
+                <input type="email" class="box" placeholder="enter your email" required maxlength="100" name="email">
+                <input type="number" class="box" placeholder="enter your number" required maxlength="100" name="number">
+                <textarea name="msg" class="box" placeholder="enter your message" required cols="30"
+                    rows="10"></textarea>
+                <input type="submit" value="send message" class="inline-btn" name="submit">
+            </form>
+        </div>
+        <div class="box-container">
+            <div class="box">
+                <i class="fas fa-phone"></i>
+                <h3>phone number</h3>
+                <a href="tel:1234567890">123-456-7890</a>
+                <a href="tel:9997775555"> 999-777-5555</a>
+            </div>
+
+            <div class="box">
+                <i class="fas fa-envelope"></i>
+                <h3>email address</h3>
+                <a href="mailto:learnify01@gmail.com">learnify01@gmail.com</a>
+                <a href="mailto:nidhigupta01@gamil.com"> nidhigupta01@gamil.com</a>
+            </div>
+
+            <div class="box">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>office address</h3>
+                <a href="#">flat no.1, blue haert building, sakchi, jamshedpur, india-831002</a>
+            </div>
+        </div>
+    </section>
+    {% include 'footer.html' %}
+</body>
+
+</html>

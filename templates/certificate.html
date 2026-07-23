@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <script>
+     
+    (function(){
+      try{
+        if(localStorage.getItem('dark-mode') === 'enabled'){
+          document.documentElement.classList.add('dark');
+          document.body?.classList?.add('dark');
+        }
+      }catch(e){}
+    })();
+  </script>
+</head>
+<body class="certificate-body">
+  <section class="certificate" id="certificate">
+    <header class="header">
+      <div class="certificate-div">
+        <h1 class="org">Learnify</h1>
+        <h1 class="title">CERTIFICATE</h1>
+        <h3 class="subtitle">OF COMPLETION</h3>
+        <h3 class="presented">PROUDLY PRESENTED TO</h3>
+
+        <!-- Student Name -->
+        <h2 id="studentName" class="name"></h2>
+        <hr>
+
+        <!-- Course Name -->
+        <p class="statement">
+          has successfully completed the <b id="courseName"></b> course/playlist.
+        </p>
+        <p class="congrats">We congratulate you on your achievement!</p>
+      </div>
+    </header>
+
+    <footer class="footerc">
+      <div class="date">
+        <p>Date: <span id="certificateDate"></span></p>
+      </div>
+      <div class="signature">
+        <p class="cursive-sign">Nidhi Gupta</p>
+        <p>Instructor Signature</p>
+      </div>
+    </footer>
+  </section>
+
+  
+  <div style="text-align:center;">
+    <button id="downloadBtn"><i class="fa-solid fa-download"></i> Download Certificate</button>
+  </div>
+  
+  
+  <style>
+    .back-btn{position:fixed; top:72px; right:16px; z-index:1000; background:#f1f1f1; border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,.15); border:none; cursor:pointer}
+    .back-btn:hover{background:#e7e7e7}
+    .back-btn i{font-size:18px; color:#333}
+    @media (max-width: 768px){.back-btn{top:64px; right:12px}}
+  </style>
+  <button class="back-btn" onclick="history.back()" title="Back" aria-label="Back">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+  <noscript><a href="/" class="back-btn" title="Back" aria-label="Back"><i class="fas fa-arrow-left"></i></a></noscript>
+   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+       
+      const djangoName = "{{ request.user.first_name }} {{ request.user.last_name }}".trim();
+      const djangoUsername = "{{ request.user.username }}";
+      const djangoEmail = "{{ request.user.email }}";
+      let username = localStorage.getItem('username') || djangoName || djangoUsername || djangoEmail || 'Student';
+      const params = new URLSearchParams(window.location.search);
+      const courseParam = params.get('course');
+      let course = localStorage.getItem('course') || (courseParam ? `${courseParam.toUpperCase()} Basics` : 'Course');
+      const date = new Date().toLocaleDateString();
+
+      document.getElementById('studentName').innerText = (username || 'Student').trim();
+      document.getElementById('courseName').innerText = course;
+      document.getElementById('certificateDate').innerText = date;
+
+      
+      document.getElementById('downloadBtn').addEventListener('click', () => {
+        const certificate = document.getElementById('certificate');
+        html2canvas(certificate, { scale: 2 }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('landscape', 'pt', 'a4');
+          const width = pdf.internal.pageSize.getWidth();
+          const height = pdf.internal.pageSize.getHeight();
+          pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+          pdf.save('certificate.pdf');
+        });
+      });
+    });
+  </script>
+  
+</body>
+</html>

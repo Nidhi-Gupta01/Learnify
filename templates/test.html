@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script>
+        // Persist dark mode on this page before paint
+        (function(){
+          try{
+            if(localStorage.getItem('dark-mode') === 'enabled'){
+              document.documentElement.classList.add('dark');
+              document.addEventListener('DOMContentLoaded', function(){
+                document.body?.classList?.add('dark');
+              });
+            }
+          }catch(e){}
+        })();
+    </script>
+</head>
+<body>
+  {% include 'header.html' %}
+    <section class="quiz-container">
+        <h1 id="test-header" class="heading">Final Test</h1>
+        <form id="quiz-form">
+            <!-- Questions will be loaded here dynamically -->
+        </form>
+
+        <div id="result" class="result-box"></div>
+    </section>
+    <!-- Ensure quizzes object is defined before inline script -->
+    <script src="{% static 'learnify.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const courseName = params.get("course") || "html";
+            // Connect test page to certificate page by setting username in localStorage
+            try {
+                const fullName = "{{ request.user.first_name }} {{ request.user.last_name }}".trim();
+                if (fullName && fullName !== "") {
+                    localStorage.setItem('username', fullName);
+                }
+            } catch (e) {}
+
+            const questions = quizzes[courseName];
+            const quizForm = document.getElementById('quiz-form');
+            const resultBox = document.getElementById('result');
+
+            if (!questions || questions.length === 0) {
+                quizForm.innerHTML = "<p>No test available for this course.</p>";
+                return;
+            }
+
+            questions.forEach((question, index) => {
+                const div = document.createElement('div');
+                div.classList.add('question');
+                div.innerHTML = `
+            <h3>${index + 1}. ${question.q}</h3>
+            ${question.options.map((opt, i) => `
+                <label>
+                    <input type="radio" name="q${index}" value="${i}" required>
+                    ${opt}
+                </label>
+            `).join('')}
+        `;
+                quizForm.appendChild(div);
+            });
+
+            const submitBtn = document.createElement('button');
+            submitBtn.type = "submit";
+            submitBtn.textContent = "Submit Test";
+            submitBtn.classList.add("retake-btn");
+            quizForm.appendChild(submitBtn);
+
+            quizForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                let score = 0;
+                questions.forEach((question, index) => {
+                    const selected = quizForm[`q${index}`].value;
+                    if (parseInt(selected) === question.answer) {
+                        score++;
+                    }
+                });
+                const percentage = (score / questions.length) * 100;
+                resultBox.innerHTML = `
+            <h2>Your Score: ${score} / ${questions.length}</h2>
+            <p>Percentage: ${percentage.toFixed(2)}%</p>
+            ${percentage >= 70
+                        ? `<p>🎉 Congratulations! You passed.</p>
+                           <a href="{% url 'certificate' %}?course=${courseName}" class="retake-btn">Get Certificate</a>`
+                        : "<p>❌ You need at least 70% to pass. Try again!</p>"}
+            <button onclick=\"location.reload()\" class=\"retake-btn\">Retake Test</button>
+        `;
+
+                // If passed, set flags for certificate page to read
+                if (percentage >= 70) {
+                    try {
+                        localStorage.setItem('passed', 'true');
+                        localStorage.setItem('course', `${courseName.toUpperCase()} Basics`);
+                    } catch (e) {}
+                } else {
+                    try {
+                        localStorage.setItem('passed', 'false');
+                    } catch (e) {}
+                }
+            });
+        });
+    </script>
+     {% include 'footer.html' %}
+</body>
+</html>

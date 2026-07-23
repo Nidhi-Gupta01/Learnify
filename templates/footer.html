@@ -1,0 +1,25 @@
+{% load static %}  <!-- YEH LINE ADD KARO -->
+<footer class="footer">
+    &copy; copyright @ 2024 by <span><b>NID'Z</b> <i class="fa-regular fa-heart"></i></span> | all rights reserved!
+</footer>
+
+{% if request.resolver_match.url_name != 'home' %}
+  
+  <style>
+    .back-btn{position:fixed; top:72px; right:16px; z-index:1000; background:#f1f1f1; border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,.15); border:none; cursor:pointer}
+    .back-btn:hover{background:#e7e7e7}
+    .back-btn i{font-size:18px; color:#333}
+    @media (max-width: 768px){
+      .back-btn{top:64px; right:12px}
+    }
+  </style>
+  <button class="back-btn" onclick="history.back()" title="Back" aria-label="Back">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+  <noscript><a href="/" class="back-btn" title="Back" aria-label="Back"><i class="fas fa-arrow-left"></i></a></noscript>
+{% endif %}
+
+<script src="{% static 'learnify.js' %}"></script>
+
+</body>
+</html>

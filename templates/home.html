@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+  {% include 'header.html' %}
+    <section class="quick-select">
+        <h1 class="heading">
+            Quick options</h1>
+
+        <div class="box-container">
+            <div class="box">
+                <h3 class="title"> Likes and Comments</h3>
+                <p>total likes : <span>14</span></p>
+                <a href="{% url 'courses' %}" class="inline-btn">view likes</a>
+                <p>total comments : <span>24</span></p>
+                <a href="{% url 'courses' %}" class="inline-btn">view comments</a>
+                <p>Saved Playlist : <span>4</span></p>
+                <a href="{% url 'courses' %}" class="inline-btn">view playlist</a>
+            </div>
+
+            <div class="box">
+                <h3 class="title"> Top Categories</h3>
+                <div class="flex">
+                    <a href="#"><i class="fas fa-code"></i><span> Development</span></a>
+                    <a href="#"><i class="fas fa-chart-simple"></i><span> Business</span></a>
+                    <a href="#"><i class="fas fa-pen"></i><span> Design</span></a>
+                    <a href="#"><i class="fas fa-chart-line"></i><span> Marketing</span></a>
+                    <a href="#"><i class="fas fa-music"></i><span> Music</span></a>
+                    <a href="#"><i class="fas fa-camera"></i><span> photography</span></a>
+                    <a href="#"><i class="fas fa-cog"></i><span> Software</span></a>
+                    <a href="#"><i class="fas fa-vial"></i><span> Science</span></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3 class="title"> Popular topics</h3>
+                <div class="flex">
+                    <a href="#"><i class="fab fa-html5"></i><span> Html</span></a>
+                    <a href="#"><i class="fab fa-css3"></i><span> CSS</span></a>
+                    <a href="#"><i class="fab fa-js"></i><span> Javascript</span></a>
+                    <a href="#"><i class="fab fa-react"></i><span> react</span></a>
+                    <a href="#"><i class="fab fa-php"></i><span> PHP</span></a>
+                    <a href="#"><i class="fab fa-bootstrap"></i><span> Bootsrap</span></a>
+                </div>
+            </div>
+
+            <div class="box tutor">
+                <h3 class="title"> Become a tutor</h3>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus sapiente hic, consectetur
+                    nesciunt repellat laudantium.</p>
+                <a href="{% url 'register' %}" class="inline-btn">get started</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="courses">
+        <h1 class="heading">Our course</h1>
+        <div class="box-container">
+            <div class="box">
+                <div class="tutor">
+                    <img src="{% static 'images/t2.jpg' %}" alt="tutor image" style="width:100px; height:100px; border-radius:50%;">
+                    <div>
+                        <h3>Nidhi Gupta</h3>
+                        <span>21-25-2022</span>
+                    </div>
+                </div>
+                <img src="{% static 'images/img9.jpg' %}" alt="course image" class="course-thumb">
+                <h3 class="title">Complete html tutorial</h3>
+               <a href="{% url 'playlist' %}?course=html" class="inline-btn">view playlist</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="{% static 'images/t2.jpg' %}" alt="tutor image" style="width:100px; height:100px; border-radius:50%;">
+                    <div>
+                        <h3>Nidhi Gupta</h3>
+                        <span>21-25-2022</span>
+                    </div>
+                </div>
+                <img src="{% static 'images/img8.jpg' %}" alt="course image" class="course-thumb">
+                <h3 class="title">Complete css tutorial</h3>
+                <a href="{% url 'playlist' %}?course=css" class="inline-btn">view playlist</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="{% static 'images/aboutpic.jpg' %}" alt="tutor image"
+                        style="width:100px; height:100px; border-radius:50%;">
+                    <div>
+                        <h3>Nidhi Gupta</h3>
+                        <span>21-25-2022</span>
+                    </div>
+                </div>
+                <img src="{% static 'images/img7.jpg' %}" alt="course image" class="course-thumb">
+                <h3 class="title">Complete JS tutorial</h3>
+                <a href="{% url 'playlist' %}?course=js" class="inline-btn">view playlist</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="{% static 'images/t3.jpg' %}" alt="tutor image" style="width:100px; height:100px; border-radius:50%;">
+                    <div>
+                        <h3>Nidhi Gupta</h3>
+                        <span>21-25-2022</span>
+                    </div>
+                </div>
+                <img src="{% static 'images/img5.jpg' %}" alt="course image" class="course-thumb">
+                <h3 class="title">Complete jquery tutorial</h3>
+             <a href="{% url 'playlist' %}?course=jquery" class="inline-btn">view playlist</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="{% static 'images/aboutpic.jpg' %}" alt="tutor image"
+                        style="width:100px; height:100px; border-radius:50%;">
+                    <div>
+                        <h3>Nidhi Gupta</h3>
+                        <span>21-25-2022</span>
+                    </div>
+                </div>
+                <img src="{% static 'images/img6.jpg' %}" alt="course image" class="course-thumb">
+                <h3 class="title">Complete Bootstrap tutorial</h3>
+                <a href="{% url 'playlist' %}?course=bootstrap" class="inline-btn">view playlist</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="{% static 'images/t1.jpg' %}" alt="tutor image" style="width:100px; height:100px; border-radius:50%;">
+                    <div>
+                        <h3>Nidhi Gupta</h3>
+                        <span>21-25-2022</span>
+                    </div>
+                </div>
+                <img src="{% static 'images/img4.jpg' %}" alt="course image" class="course-thumb">
+                <h3 class="title">Complete saas tutorial</h3>
+                <a href="{% url 'playlist' %}?course=sass" class="inline-btn">view playlist</a>
+            </div>
+
+            <div class="more-btn">
+                <a href="{% url 'courses' %}" class="inline-option-btn">view more</a>
+            </div>
+        </div>
+    </section>
+ {% include 'footer.html' %}
+</body>
+</html>
